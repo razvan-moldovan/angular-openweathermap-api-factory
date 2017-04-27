@@ -1,6 +1,6 @@
 /**
     @name: angular-openweathermap-api-factory 
-    @version: 0.6.0 (25-09-2016) 
+    @version: 0.6.1 (27-04-2017)
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/angular-openweathermap-api-factory#readme 
     @license: MIT
@@ -11,6 +11,14 @@ angular.module("jtt_openweathermap", [])
     .factory('openweathermapFactory', ['$http', 'openweathermapSearchDataService', function ($http, openweathermapSearchDataService) {
 
         var openweathermapFactory = {};
+
+      /**
+       * Override the original url - in case of version change for example
+       * @param _url
+       */
+        openweathermapFactory.setApiBaseUrl = function (_url) {
+          openweathermapSearchDataService.baseApiUrl = _url;
+        };
 
         openweathermapFactory.getWeatherFromCitySearchByName = function (_params) {
             var searchData = openweathermapSearchDataService.getNew("citySearchByName", _params);
@@ -87,8 +95,10 @@ angular.module("jtt_openweathermap", [])
         return openweathermapFactory;
     }])
     .service('openweathermapSearchDataService', function () {
+        this.baseApiUrl = "http://api.openweathermap.org/data/2.5/";
+
         this.getApiBaseUrl = function (_params) {
-            return "http://api.openweathermap.org/data/2.5/";
+            return this.baseApiUrl;
         };
 
         this.fillDataInObjectByList = function (_object, _params, _list) {
@@ -165,6 +175,7 @@ angular.module("jtt_openweathermap", [])
                     ]);
                     openweathermapSearchData.url = this.getApiBaseUrl() + "forecast";
                     break;
+
             }
             return openweathermapSearchData;
         };

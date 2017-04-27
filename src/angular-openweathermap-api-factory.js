@@ -5,6 +5,10 @@ angular.module("jtt_openweathermap", [])
 
         var openweathermapFactory = {};
 
+        openweathermapFactory.setApiBaseUrl = function (_url) {
+          openweathermapSearchDataService.baseApiUrl = _url;
+        };
+
         openweathermapFactory.getWeatherFromCitySearchByName = function (_params) {
             var searchData = openweathermapSearchDataService.getNew("citySearchByName", _params);
             return $http({
@@ -80,8 +84,10 @@ angular.module("jtt_openweathermap", [])
         return openweathermapFactory;
     }])
     .service('openweathermapSearchDataService', function () {
+        this.baseApiUrl = "http://api.openweathermap.org/data/2.5/";
+
         this.getApiBaseUrl = function (_params) {
-            return "http://api.openweathermap.org/data/2.5/";
+            return this.baseApiUrl;
         };
 
         this.fillDataInObjectByList = function (_object, _params, _list) {
