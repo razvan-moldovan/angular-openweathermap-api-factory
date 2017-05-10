@@ -157,7 +157,10 @@ openweathermapFactory.getForecast5FromLocationByCoordinates({
     //on error
 });
 ```
-
+### change API url where to send params
+```js
+openweathermapFactory.setApiBaseUrl('https://crossorigin.me/http://api.openweathermap.org/data/2.5/');
+```
 
 ## OpenWeatherMap JSON API
 * docs: http://openweathermap.org/api
